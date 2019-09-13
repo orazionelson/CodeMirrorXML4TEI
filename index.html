@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="Alfredo Cosco">
+    <!--link rel="icon" href="../../favicon.ico"-->
+    
+
+    <title>CodeMirror XML4TEI</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+		<style>
+			/*This page style*/			
+			.pretty-pre {
+				background: #E5E5E5;
+				font-family: verdana;
+				padding-top:20px;
+				overflow: hidden;
+				width: 70%;
+				transition: width 0.9s;
+				}
+			.pretty-pre.expand:hover {
+				position: relative;
+				width: 100%;
+				z-index: 99;
+				transition: width 0.9s;
+				}				
+		</style>
+    
+    <!--Codemirror CSS-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/addon/hint/show-hint.css" integrity="sha256-9PjI1IwVXcv44E37KbDVAJdEYNCCBK3+Ddo757s6L8g=" crossorigin="anonymous" />
+
+    <!--CodeMirror-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.js" integrity="sha256-PHkGItNLOKwncPJgy7PBTvpxormE+UVUp7sHVEYEvKg=" crossorigin="anonymous"></script>
+    <!--Codemirror XML+hints-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/addon/hint/show-hint.js" integrity="sha256-hLov+tYoo2LWBWGx3krB9FumdzkmHte1oSOjlczrXuE=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/addon/hint/xml-hint.js" integrity="sha256-UgSoVCWjs0Yf1Sf+7Ih5jYE5RUOj0APTjBfjfgKPf44=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/mode/xml/xml.js" integrity="sha256-YaSCLbgcWefc1ZsXbZnIrK0BQ6lIGEPjBKiMyOL0Y7w=" crossorigin="anonymous"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">CodeMirror XML4TEI</a>
+        </div>
+        <!--div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right">
+            <div class="form-group">
+              <input type="text" placeholder="Email" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">Sign in</button>
+          </form>
+        </div--><!--/.navbar-collapse -->
+      </div>
+    </nav>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h1>CodeMirror XML4TEI</h1>
+        <p>Come ottenere un editor per TEI usando CodeMirror, definendo uno schema di TAG in XML</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-12">
+          <h2>1) Integrare CodeMirror</h2>
+          <p><a href="https://codemirror.net">Codemirror</a> è un editor di testo integrabile all'interno di una applicazione web, il progetto è open source e fornisce numerosi plugin per estendere l'editor di base e tool per scrivere codice in diversi linguaggi di programmazione.</p> 
+          <p>Una delle demo di integrazione di plugin più interessanti si trova a questa pagina: <a href="https://codemirror.net/demo/xmlcomplete.html">https://codemirror.net/demo/xmlcomplete.html</a> e illustra come integrare un tool di autocompletamento con il plug-in per scrivere l'XML.</p>
+          <p>Una volta aggiunti i file di Codemirror:</p>
+<pre class="pretty-pre">
+<!--CodeMirror-->
+&lt;script src="codemirror-path/codemirror.js"&gt;&lt;/script&gt;
+<!--Tool per l'autocompletamento-->
+&lt;script src="codemirror-path/addon/hint/show-hint.js"&gt;&lt;/script&gt;
+<!--Tool per l'autocompletamento di XML-->
+&lt;script src="codemirror-path/addon/hint/xml-hint.js"&gt;&lt;/script&gt;
+<!--Plug-in per XML-->
+&lt;script src="codemirror-path/mode/xml/xml.js"&gt;&lt;/script&gt;
+</pre>
+	<p>Bisogna aggiungere tre piccole funzioni in javascript per regolare il comportamento dell'editor all'apertura e alla chiusura dei tag:</p>
+<pre class="pretty-pre expand">
+  function completeAfter(cm, pred) {
+	var cur = cm.getCursor();
+	if (!pred || pred()) setTimeout(function() {
+	  if (!cm.state.completionActive)
+		cm.showHint({completeSingle: false});
+	}, 100);
+	return CodeMirror.Pass;
+  }
+
+  function completeIfAfterLt(cm) {
+	return completeAfter(cm, function() {
+	  var cur = cm.getCursor();
+	  return cm.getRange(CodeMirror.Pos(cur.line, cur.ch - 1), cur) == "<";
+	});
+  }
+
+ function completeIfInTag(cm) {
+	return completeAfter(cm, function() {
+	  var tok = cm.getTokenAt(cm.getCursor());
+	  if (tok.type == "string" && (!/['"]/.test(tok.string.charAt(tok.string.length - 1)) || tok.string.length == 1)) return false;
+	  var inner = CodeMirror.innerMode(cm.getMode(), tok.state).state;
+	  return inner.tagName;
+	});
+}
+</pre>
+		<p>Che serviranno poi a settare il trigger per Codemirror</p>
+<pre class="pretty-pre">
+var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+	mode: "xml",
+	lineNumbers: true,
+	extraKeys: {
+		"'<'": completeAfter,
+		"'/'": completeIfAfterLt,
+		"' '": completeIfInTag,
+		"'='": completeIfInTag,
+		"Ctrl-Space": "autocomplete"
+	},
+	hintOptions: {schemaInfo: tags}
+});
+</pre>
+		<p>L'ultima opzione del trigger (<i>hintOptions</i>) andrà a chiamare una variabile scritta in json che servirà a definire la struttura XML che l'autocompletamento di Codemirror dovrà suggerire durante l'editing del file.</p>
+		<p>Immaginiamo di voler settare un editor per marcare in TEI l'elemento <i><a href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-body.html">body</a></i> che contiene paragrafi in prosa <i><a href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-p.html">p</a></i>; all'interno dei quali vogliamo evidenziare nomi di persona: <i><a href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-persName.html">persName</a></i> e nomi di luogo: <i><a href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-placeName.html">placeName</a></i>.</p>
+		<p>Ogni persona (<i>persName</i>) è individuata tramite due attributi: un <i><a href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-att.naming.html">role</a></i> che è settato tramite una lista predefinata (<i>controlled vocabulary</i>) e una <i><a href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-att.canonical.html">key</a></i> a testo libero, inoltre può contenere a sua volta un <i><a href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-forename.html">forename</a></i>, un <i><a href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-surname.html">surname</a></i> e anche un <i>placeName</i>.</p>
+		<p>Ogni luogo (<i>placeName</i>) può contenere un <i><a href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-settlement.html">settlement</a></i>, una <i><a href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-region.html">region</a></i> o un <i><a href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-country.html">country</a></i>.</p>
+		
+		<p>L'astrazione in json di questo schema sarà questa:</p> 
+		
+<pre class="pretty-pre">
+var tags = {
+        "!top": ["p"],        
+        p: {
+          children: ["persName", "placeName"]
+        },
+        persName: {
+          attrs: {
+            key: null,
+            role: ["re","barone","conte"]
+          },
+          children: ["forename", "surname", "placeName"]
+        },
+        placeName: {
+          children: ["settlement", "region", "country"]
+        }
+      };
+</pre>
+<p>Ecco un esempio di come l'editor guiderà nella scrittura dell'XML.</p>
+<img src="images/preview.gif" style="border:1px solid black" alt="Preview" />	
+       </div>
+        <div class="col-md-12">
+          <h2>2) Aggiungiamo un script che traduce l'XML in JSON</h2>
+          <p>Tuttavia scrivere direttamente in JSON è un'operazione complicata, vediamo quindi come creare
+	uno schema in XML per scrivere l'XML-TEI.</p>
+          <p>Su GitHub c'è uno script che con qualche adattamento farà al nostro caso:</p>
+          <p><a href="https://github.com/sergeyt/jQuery-xml2json/blob/master/src/xml2json.js">https://github.com/sergeyt/jQuery-xml2json/blob/master/src/xml2json.js</a></p>
+          <p>Sono due le principali modifiche da fare a questo script:</p>
+          <ul>
+			  <li>spostare la chiamata dello schema XML nel trigger di codemirror, questo ci permetterà agevolmente di avere schemi diversi anche nello stesso contesto</li>
+			  <li>adattare la trasformazione del nostro XML al JSON di CodeMirror che, ad esempio, richiede che il tag root sia preceduto da un punto esclamativo (cosa che non possiamo fare nell'XML)</li>
+          </ul>
+          <p>Alla fine lo schema XML per scrivere l'XML sarà così:</p>
+		<pre class="pretty-pre">
+<cm_tei_schema>
+    <top>p</top>
+    <p>
+        <children>persName</children>
+        <children>placeName</children>
+    </p>
+    <persName>
+        <attrs>
+            <key/>
+            <role>re</role>
+            <role>barone</role>
+            <role>conte</role>
+            <role>giudice</role>
+            <role>milite</role>
+            <role>chierico</role>
+        </attrs>
+        <children>forename</children>
+        <children>surname</children>
+    </persName>
+    <placeName>
+        <attrs>
+            <key/>
+        </attrs>
+        <children/>
+    </placeName>
+     <forename>
+        <children/>
+    </forename>
+    <surname>
+        <children/>
+    </surname>
+    <span>
+        <attrs>
+            <rend>sup</rend>
+            <rend>uppercase</rend>
+        </attrs>
+        <children/>
+    </span>
+</cm_tei_schema>	
+		</pre>
+          <p>Questa struttura è molto più intuitiva del JSON puro, senza dover combatter tra apici, virgolette e parentesi basterà seguire poche semplici regole:</p>
+          <ul>
+			<li>si definisce il marcatore con il suo stesso nome;</li>
+			<li>all'interno del marcatore si definiscono in <b>&lt;attrs&gt;</b> gli attributi, il tag sarà il nome dell'attributo e il contenuto sarà la lista di valori possibili, un tag vuoto permette di inserire un testo libero</li>
+			<li>all'interno del marcatore dentro il tag <b>&lt;children&gt;</b> si definiranno i marcatori figli ammessi, se il tag non ammette figli si dovrà inserire un tag <b>&lt;children/&gt;</b> vuoto.</li>
+          </ul>
+        <p>Si può testare l'editor con questa semplice struttura qui:</p> 
+        <form class="col-md-10" style="border: 1px solid black">
+			<textarea id="code" name="code"><!-- write TEI-XML below --></textarea>
+		</form>
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy;LEFT 2019 <a href="https://github.com/orazionelson">https://github.com/orazionelson</a> alfredo.cosco[AT]gmail.com</p>
+      </footer>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery-2.2.4.min.js"></script>
+    <!--script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script-->
+    <script src="js/bootstrap.min.js"></script>
+        <script src="js/prettypre.jquery.js"></script>
+	<script>$(document).ready(function(){
+		$('.pretty-pre').prettyPre();
+		//$('pre').prettyPre();
+		});
+	</script>
+	<!-- CM scripts & trigger-->
+	<script src="js/cm_tei_schema2json.js"></script>
+	<script src="js/cm_xml_functions.js"></script>
+	<script src="js/cm_xml_trigger.js"></script>
+
+
+  </body>
+</html>
