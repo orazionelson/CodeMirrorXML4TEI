@@ -1,0 +1,27 @@
+<text>
+	<front>
+		<docTitle>
+			<titlePart>Lorem Ipsum</titlePart>
+		</docTitle>
+	</front>
+ <body>
+	<div type="protocollo"><p>Lorem ipsum dolor<ref target="#ax56" type="integer"/> sit amet, consectetur adipiscing elit. Maecenas commodo vel velit a porttitor. Quisque cursus tellus felis, sit amet tempor justo commodo eget. Nulla facilisi. Sed felis turpis, vestibulum<ref target="#ax54" type="integer"/> nec elit feugiat, pellentesque tempor arcu. </p></div>
+	<div type="testo"><p>Mauris id vestibulum metus. Morbi nec ligula sit amet neque interdum elementum nec et mi. Aliquam erat volutpat<ref target="#ax57" type="integer"/>. Mauris condimentum nisl a velit luctus, at luctus purus maximus. Phasellus fermentum venenatis feugiat. Donec vitae malesuada dolor, eget viverra risus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris dolor felis, iaculis id vehicula id, blandit in sapien. Curabitur nec lacus sed nisi porttitor vulputate.</p></div>
+	<div type="escatocollo"><p>Quisque est libero, scelerisque eu tincidunt in, molestie non justo. Quisque eu nisi efficitur nibh pulvinar feugiat non sed lorem. Pellentesque velit ex, laoreet vitae mollis id, suscipit vel ante. Donec faucibus convallis urna. Fusce at eros eu arcu cursus semper. Praesent quis scelerisque libero. Vestibulum ultrices nunc id quam dapibus porttitor. Etiam <ref target="#ax59" type="integer"/> in fermentum sapien. Vestibulum quam felis, facilisis nec mollis congue, aliquam et sem. Aliquam molestie elit eu nisl egestas, vel efficitur libero posuere. Maecenas nec nisi non lectus feugiat vehicula. Cras vel ullamcorper tortor. Sed eget rhoncus dolor. Aliquam aliquam lacinia nisi vel tincidunt. Vestibulum dapibus tortor a quam gravida posuere. Phasellus nec neque ligula.
+	</p></div>
+    <div type="notes">
+		<note xml:id="ax56" type="integer">
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas commodo vel velit a porttitor. Quisque cursus tellus felis, sit amet tempor justo commodo eget.</p>
+		</note>
+		<note xml:id="ax54" type="alpha">
+			<p>Nulla facilisi. Sed felis turpis, vestibulum nec elit feugiat, pellentesque tempor arcu. Sed vestibulum enim purus, sit amet varius mauris facilisis ut.</p>
+		</note>
+		<note xml:id="ax57" type="integer">
+			<p>Phasellus quam ligula, tincidunt quis interdum in, dictum quis purus. Duis sagittis porttitor metus, eget consectetur massa pharetra et. Sed vehicula odio quis eros viverra accumsan. Pellentesque laoreet tortor quis lacus accumsan tempor.</p>
+		</note>
+		<note xml:id="ax59" type="alpha">
+			<p>Etiam faucibus velit sit amet vestibulum maximus. Integer gravida metus id tellus pharetra pulvinar. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec accumsan lorem in est fringilla hendrerit. Proin vel neque in dolor faucibus condimentum. Fusce quis lacinia nunc, quis venenatis ipsum. Mauris pulvinar hendrerit turpis id finibus. Sed nulla turpis, molestie in laoreet pulvinar, faucibus sed enim.</p>
+		</note>
+	</div> 
+</body>
+</text>

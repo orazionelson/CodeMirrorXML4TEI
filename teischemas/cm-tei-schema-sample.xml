@@ -1,0 +1,32 @@
+<cm_tei_schema>
+	<top>text</top>
+	<text>
+		<children>body</children>
+	</text>
+	<body>
+		<children>docDate</children>
+		<children>div</children>
+	</body>
+    <docDate>
+        <children>date</children>
+    </docDate>
+	<date when="YYYYMMDD">
+		<children/>
+	</date>
+    <div type="">
+        <children>p</children>
+    </div>
+	<p>
+        <children>persName</children>
+        <children>placeName</children>
+    </p>
+    <persName key="" role="king,duke,settler">
+        <children>forename</children>
+        <children>surname</children>
+    </persName>
+    <placeName key="">
+        <children>settlement</children>
+        <children>region</children>
+        <children>country</children>
+    </placeName>
+</cm_tei_schema>

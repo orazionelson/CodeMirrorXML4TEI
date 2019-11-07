@@ -1,54 +1,39 @@
 <cm_tei_schema>
-    <top>p</top>
-    <p>
-        <children>persName</children>
-        <children>placeName</children>
-    </p>
-    <persName>
-        <attrs>
-            <key/>
-            <role>re</role>
-            <role>barone</role>
-            <role>conte</role>
-            <role>giudice</role>
-            <role>milite</role>
-            <role>chierico</role>
-        </attrs>
-        <children>forename</children>
-        <children>surname</children>
-    </persName>
-    <placeName>
-        <attrs>
-            <key/>
-        </attrs>
-        <children/>
-    </placeName>
-    <list>
-        <attrs>
-            <rend>bulletted</rend>
-            <rend>numbered</rend>
-        </attrs>
-        <children>item</children>
-    </list>
-    <item>
+	<top>text</top>
+	<text>
+		<children>body</children>
+	</text>
+	<body>
+		<children>docDate</children>
+		<children>div</children>
+	</body>
+    <docDate>
         <children>date</children>
-        <children>persName</children>
-        <children>placeName</children>
+    </docDate>
+	<date when="YYYYMMDD">
+		<children/>
+	</date>
+    <div type="">
+        <children>p</children>
+    </div>
+	<p>
+        <children>dateline</children>
+        <children>date</children>
         <children>geogName</children>
         <children>list</children>
+        <children>orgName</children>
+        <children>persName</children>
+        <children>placeName</children>
+        <children>roleName</children>
         <children>span</children>
-    </item>
-    <forename>
-        <children/>
-    </forename>
-    <surname>
-        <children/>
-    </surname>
-    <span>
-        <attrs>
-            <rend>sup</rend>
-            <rend>uppercase</rend>
-        </attrs>
-        <children/>
-    </span>
+    </p>
+    <persName key="" role="re,barone,conte">
+        <children>forename</children>
+        <children>geogName</children>
+        <children>orgName</children>
+        <children>placeName</children>
+        <children>roleName</children>
+        <children>surname</children>
+        <children>span</children>
+    </persName>
 </cm_tei_schema>
